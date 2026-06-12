@@ -17,7 +17,7 @@ services:
       # container recreate does not silently remove installed serve engines.
       - ./data/local:/app/.local:z
       # Mount the host Desktop into the container at /host/desktop
-      - C:\Users\Home\Desktop:/host/desktop
+      #- C:\Users\YOUR_USERNAME_HERE\Desktop:/host/desktop
     extra_hosts:
       # Lets the container reach local services on the Docker host, including
       # Ollama at http://host.docker.internal:11434.
