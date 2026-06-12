@@ -473,6 +473,28 @@ class ToolIndex:
         frozenset({"write a", "create a doc", "draft", "compose", "poem", "story",
                    "essay", "outline", "letter"}):
             {"create_document", "edit_document", "update_document"},
+        # File-system tools — read, write, edit, list, search, browse the workspace.
+        # Without this hint set, the agent often claims it has no file tools because
+        # RAG embedding retrieval alone is unreliable for concrete "edit this file"
+        # / "read that file" requests. Single-word keys are wrapped in word-boundary
+        # regex by get_tools_for_query so "file" won't fire inside "profile".
+        frozenset({"read file", "read the file", "open file", "show file",
+                   "view file", "cat file", "file contents", "what's in",
+                   "edit file", "edit the file", "change the file", "fix the file",
+                   "modify file", "modify the file", "update file", "update the file",
+                   "write file", "write a file", "create file", "create a file",
+                   "new file", "save file", "save to file", "save as",
+                   "list files", "list directory", "list folder", "browse files",
+                   "browse folder", "show directory", "ls", "dir",
+                   "find file", "find files", "search file", "search files",
+                   "search for file", "search in file", "search in files",
+                   "grep", "search code", "search source", "find in code",
+                   "find in project", "search project", "look for",
+                   "file", "files", "folder", "folders", "directory", "directories",
+                   "codebase", "source code", "source file", "project file",
+                   "workspace", "project folder", "project directory",
+                   "disk", "on disk", "file system"}):
+            {"read_file", "write_file", "edit_file", "ls", "glob", "grep", "get_workspace"},
     }
 
     def get_tools_for_query(

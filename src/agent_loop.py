@@ -1887,6 +1887,14 @@ async def stream_agent_loop(
     if _relevant_tools is not None and active_document is not None:
         _relevant_tools.update({"edit_document", "update_document", "suggest_document"})
 
+    # If a workspace is active the model needs ALL file tools available —
+    # read, write, edit, list, search — regardless of which selection path
+    # ran. Setting a workspace is an explicit user signal that file work is
+    # the intent; without this the agent often claims it has no file tools
+    # when RAG retrieval or keyword hints miss.
+    if _relevant_tools is not None and workspace:
+        _relevant_tools.update({"read_file", "write_file", "edit_file", "ls", "glob", "grep", "get_workspace"})
+
     if _relevant_tools is not None:
         logger.info("[agent-intent] selected_tools=%s", sorted(_relevant_tools)[:50])
 
